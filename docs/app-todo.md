@@ -3,18 +3,19 @@
 The assistant builds the e-commerce app (System Under Test) against this list.
 Organized by the 7 build milestones. Check items off as completed.
 
-## Milestone 1 — Skeleton + Docker + Postgres + health
-- [ ] Project structure (`app/`, `templates/`, `static/`)
-- [ ] `requirements.txt`
-- [ ] `app/config.py` (env-driven settings: DB URL, JWT, app_env, fail-card suffix)
-- [ ] `app/database.py` (SQLAlchemy engine, session, Base, `get_db`)
-- [ ] `app/main.py` (FastAPI app factory, startup table create, Swagger at `/docs`)
-- [ ] `GET /health` and `GET /ready` endpoints
-- [ ] `Dockerfile` (app image)
-- [ ] `docker-compose.yml` (app + Postgres, healthchecks)
-- [ ] `.env.example`
-- [ ] `README.md` (how to run locally with one command)
-- [ ] Verify `docker compose up` boots app + DB and `/health` returns 200
+## Milestone 1 — Skeleton + Docker + Postgres + health  ✅ DONE (2026-07-23)
+- [x] Project structure (`app/`, `templates/`, `static/`)
+- [x] `requirements.txt`
+- [x] `app/config.py` (env-driven settings: DB URL, JWT, app_env, fail-card suffix)
+- [x] `app/database.py` (SQLAlchemy engine, session, Base, `get_db`)
+- [x] `app/main.py` (FastAPI app factory, startup table create, Swagger at `/docs`)
+- [x] `GET /health` and `GET /ready` endpoints
+- [x] `Dockerfile` (app image)
+- [x] `docker-compose.yml` (app + Postgres, healthchecks)
+- [x] `.env.example`
+- [x] `README.md` (how to run locally with one command)
+- [x] Verify `docker compose up` boots app + DB and `/health` returns 200
+      (verified: /health→200 ok, /ready→200 db ok, /openapi.json title "Shoplite API")
 
 ## Milestone 2 — Auth + users/roles
 - [ ] `app/models.py` — User (email, password_hash, role)
