@@ -1,7 +1,7 @@
 # Test To-Do (YOURS — you own everything here)
 
-The assistant does NOT write these unless you explicitly ask. This is your SDET
-practice checklist. Update it freely as you go. Organized by the test pyramid + infra.
+The assistant does NOT write these unless you explicitly ask. This is your
+test-automation practice checklist. Update it freely as you go. Organized by the test pyramid + infra.
 
 ## Setup / tooling
 - [ ] Create `tests/` structure: `tests/unit/`, `tests/api/`, `tests/e2e/`, `load/`
@@ -58,7 +58,7 @@ Data-driven
 - [ ] Capture p95 latency, RPS, error rate; note a baseline
 - [ ] (Optional) compare Postgres behavior under increasing concurrency
 
-## Infra / CI-CD (the SDET differentiators)
+## Infra / CI-CD (the automation differentiators)
 - [ ] `.github/workflows/ci.yml`: lint → unit (+coverage gate) → build image → compose up → API tests → E2E tests
 - [ ] Deploy-only-if-green step → Render
 - [ ] Publish Allure report as a CI artifact

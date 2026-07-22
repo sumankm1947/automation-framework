@@ -1,6 +1,6 @@
-# SDET Automation Plan (practice + resume)
+# Test Automation Plan (practice + resume)
 
-Structured as the test pyramid plus the infra/CI-CD/load layers that turn "QA" into "SDET".
+Structured as the test pyramid plus the infra/CI-CD/load layers that turn manual QA into full test automation.
 
 ## The pyramid
 
@@ -26,7 +26,7 @@ Structured as the test pyramid plus the infra/CI-CD/load layers that turn "QA" i
 - Cross-browser, parallel execution, trace/screenshot on failure.
 - Async practice: assert against fetch-driven cart-badge updates (wait_for_response).
 
-## Cross-cutting layers (the SDET differentiators)
+## Cross-cutting layers (the automation differentiators)
 | Area | Tool | Demonstrates |
 |---|---|---|
 | Containerization | Docker + docker-compose | App + DB + tests containerized |

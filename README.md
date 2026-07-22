@@ -1,7 +1,7 @@
-# Shoplite — E-commerce SDET Test Target
+# Shoplite — E-commerce Test Target
 
 A deliberately simple but architecturally real e-commerce app, built as the
-**System Under Test** for a QA-automation → SDET portfolio. The test framework
+**System Under Test** for a QA / test-automation portfolio. The test framework
 (pytest / Playwright / Locust / CI) lives alongside it and is written separately.
 
 Stack: **FastAPI · PostgreSQL · SQLAlchemy + Alembic · JWT · Jinja2 · Docker Compose**
