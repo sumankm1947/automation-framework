@@ -56,6 +56,13 @@ def create_app() -> FastAPI:
     app.include_router(cart.router)
     app.include_router(orders.router)
     app.include_router(admin.router)
+
+    # Destructive test-support endpoints are mounted ONLY in the test env.
+    if settings.is_test_env:
+        from app.routers import test_support
+
+        app.include_router(test_support.router)
+
     app.include_router(pages.router)
 
     return app

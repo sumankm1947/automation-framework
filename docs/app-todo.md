@@ -56,11 +56,13 @@ Organized by the 7 build milestones. Check items off as completed.
       (verified via smoke test: 26 checks — RBAC 401/403, full PLACED→DELIVERED chain,
       invalid/terminal 409, 422 bad status, product create/dup/partial-update)
 
-## Milestone 6 — Test-support + docs + testability
-- [ ] `POST /api/test/reset`, `POST /api/test/seed` (guarded: only when `app_env=test`)
-- [ ] Seed data (products, a user, an admin) that automation can rely on
-- [ ] `data-testid` pass across all templates for stable selectors
-- [ ] Confirm OpenAPI spec at `/openapi.json` is complete (for contract tests)
+## Milestone 6 — Test-support + docs + testability  ✅ DONE (2026-07-26)
+- [x] `POST /api/test/reset`, `POST /api/test/seed` (mounted ONLY when `APP_ENV=test`)
+- [x] Seed data automation can rely on: admin, standard user (`user@shoplite.com`/`user12345`), 8 products
+- [x] `data-testid` pass across all templates (+ runtime rows: cart-row, order-row, timeline-event)
+- [x] OpenAPI at `/openapi.json` complete — every API path present; HTML pages excluded
+      (verified via smoke test: seed/reset counts, idempotency, wipe, OpenAPI paths;
+      separate check confirms test endpoints 404 + absent from schema outside test env)
 
 ## Milestone 7 — Negative-path polish
 - [ ] Out-of-stock handling on checkout

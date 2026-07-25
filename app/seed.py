@@ -45,6 +45,27 @@ def seed_admin(db: Session) -> None:
     db.commit()
 
 
+#: A known non-admin account the test suite can rely on. Seeded by the guarded
+#: /api/test/seed endpoint (and reset), NOT on normal startup.
+STANDARD_USER_EMAIL = "user@shoplite.com"
+STANDARD_USER_PASSWORD = "user12345"
+
+
+def seed_standard_user(db: Session) -> None:
+    """Create a predictable non-admin user for automated tests (idempotent)."""
+    existing = db.scalar(select(User).where(User.email == STANDARD_USER_EMAIL))
+    if existing is not None:
+        return
+    db.add(
+        User(
+            email=STANDARD_USER_EMAIL,
+            password_hash=hash_password(STANDARD_USER_PASSWORD),
+            role=Role.user,
+        )
+    )
+    db.commit()
+
+
 def seed_products(db: Session) -> None:
     """Insert the default catalog for any SKU not already present."""
     existing_skus = set(db.scalars(select(Product.sku)).all())

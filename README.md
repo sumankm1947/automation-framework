@@ -65,3 +65,22 @@ Built in 7 milestones (see `docs/app-todo.md`).
   /api/admin/products`) enforcing the state machine
   `PLACED → PACKING → IN_TRANSIT → DELIVERED` (+ `CANCELLED`); illegal transitions
   return 409. Admin pages at `/admin` and `/admin/products`.
+- **Milestone 6 complete:** test-support + testability. Guarded `POST /api/test/reset`
+  and `POST /api/test/seed` (mounted **only** when `APP_ENV=test`) give automation a
+  clean, known state. Stable `data-testid`s across every template. The `/openapi.json`
+  contract is complete (all API paths; HTML pages excluded).
+
+## Seeded accounts & test hooks
+
+| Account | Email | Password | Role |
+|---|---|---|---|
+| Admin (always seeded) | `admin@shoplite.com` | `admin12345` | admin |
+| Standard user (test seed) | `user@shoplite.com` | `user12345` | user |
+
+Run the app with `APP_ENV=test` to enable the test-support endpoints:
+
+- `POST /api/test/reset` — wipe all data, then re-seed admin + standard user + catalog.
+- `POST /api/test/seed` — idempotently ensure the baseline data exists.
+
+Mock payment: any card number ending in `FAIL_CARD_SUFFIX` (default `0000`) is declined
+with `402` — use it for negative checkout tests.
