@@ -56,6 +56,25 @@ class ProductPublic(BaseModel):
         return self.stock > 0
 
 
+class ProductCreate(BaseModel):
+    sku: str = Field(min_length=1, max_length=64)
+    name: str = Field(min_length=1, max_length=200)
+    description: str = ""
+    price_cents: int = Field(ge=0)
+    stock: int = Field(default=0, ge=0)
+    image_emoji: str = Field(default="📦", max_length=8)
+
+
+class ProductUpdate(BaseModel):
+    """Partial update — only provided fields change."""
+
+    name: str | None = Field(default=None, min_length=1, max_length=200)
+    description: str | None = None
+    price_cents: int | None = Field(default=None, ge=0)
+    stock: int | None = Field(default=None, ge=0)
+    image_emoji: str | None = Field(default=None, max_length=8)
+
+
 # --- Cart ---
 class CartItemCreate(BaseModel):
     product_id: int
@@ -127,3 +146,18 @@ class OrderPublic(BaseModel):
     created_at: datetime
     items: list[OrderItemPublic]
     history: list[OrderStatusEventPublic]
+
+
+class OrderStatusUpdate(BaseModel):
+    status: OrderStatus
+
+
+class AdminOrderSummary(BaseModel):
+    """Order row for the admin list, including who placed it."""
+
+    id: int
+    user_id: int
+    user_email: str
+    status: OrderStatus
+    total_cents: int
+    created_at: datetime

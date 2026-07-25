@@ -60,3 +60,8 @@ Built in 7 milestones (see `docs/app-todo.md`).
   (mock payment — a card ending in `FAIL_CARD_SUFFIX` is declined with 402), and
   `GET /api/orders[/{id}]` with a status timeline. Cart/checkout/orders pages fetch
   the API client-side using the JWT saved at login; the cart badge is fetch-driven.
+- **Milestone 5 complete:** admin order lifecycle + product management. Admin-only API
+  (`GET /api/admin/orders`, `PATCH /api/admin/orders/{id}/status`, `POST`/`PATCH
+  /api/admin/products`) enforcing the state machine
+  `PLACED → PACKING → IN_TRANSIT → DELIVERED` (+ `CANCELLED`); illegal transitions
+  return 409. Admin pages at `/admin` and `/admin/products`.

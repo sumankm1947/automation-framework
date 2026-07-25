@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+<h1 class="page-title" data-testid="admin-orders-title">Admin · Orders</h1>
+<p class="admin-links"><a href="/admin/products" data-testid="admin-products-link">Manage products →</a></p>
+
+<p class="empty" data-testid="admin-orders-empty" hidden>No orders yet.</p>
+
+<table class="table" data-testid="admin-orders-table" hidden>
+  <thead>
+    <tr><th>Order</th><th>Customer</th><th>Total</th><th>Status</th><th>Advance to</th><th></th></tr>
+  </thead>
+  <tbody data-testid="admin-orders-list"></tbody>
+</table>
+{% endblock %}
+{% block scripts %}<script src="/static/js/admin.js" defer></script>{% endblock %}

@@ -25,6 +25,36 @@ from app.schemas import CartItemPublic, CartPublic
 settings = get_settings()
 
 
+# --- Order state machine ------------------------------------------------
+# Allowed forward transitions. DELIVERED and CANCELLED are terminal.
+ALLOWED_TRANSITIONS: dict[OrderStatus, set[OrderStatus]] = {
+    OrderStatus.PLACED: {OrderStatus.PACKING, OrderStatus.CANCELLED},
+    OrderStatus.PACKING: {OrderStatus.IN_TRANSIT, OrderStatus.CANCELLED},
+    OrderStatus.IN_TRANSIT: {OrderStatus.DELIVERED},
+    OrderStatus.DELIVERED: set(),
+    OrderStatus.CANCELLED: set(),
+}
+
+
+def can_transition(current: OrderStatus, target: OrderStatus) -> bool:
+    """Return True if moving from `current` to `target` is allowed."""
+    return target in ALLOWED_TRANSITIONS.get(current, set())
+
+
+def advance_order_status(db: Session, order: Order, target: OrderStatus) -> Order:
+    """Move an order to a new status, validating the transition and logging it."""
+    if not can_transition(order.status, target):
+        raise HTTPException(
+            status_code=status.HTTP_409_CONFLICT,
+            detail=f"Cannot move order from {order.status.value} to {target.value}",
+        )
+    order.status = target
+    order.history.append(OrderStatusHistory(status=target))
+    db.commit()
+    db.refresh(order)
+    return order
+
+
 # --- Cart ---------------------------------------------------------------
 def get_or_create_cart(db: Session, user: User) -> Cart:
     """Return the user's cart, creating an empty one on first use."""

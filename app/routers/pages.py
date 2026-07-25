@@ -56,3 +56,17 @@ def order_detail_page(request: Request, order_id: int) -> HTMLResponse:
     return templates.TemplateResponse(
         request, "order_detail.html", {"title": f"Order #{order_id}", "order_id": order_id}
     )
+
+
+# Admin pages — client-rendered shells guarded by the admin JWT (app checks the
+# /api/auth/me role and redirects non-admins).
+@router.get("/admin", response_class=HTMLResponse)
+def admin_orders_page(request: Request) -> HTMLResponse:
+    return templates.TemplateResponse(request, "admin_orders.html", {"title": "Admin · Orders"})
+
+
+@router.get("/admin/products", response_class=HTMLResponse)
+def admin_products_page(request: Request) -> HTMLResponse:
+    return templates.TemplateResponse(
+        request, "admin_products.html", {"title": "Admin · Products"}
+    )

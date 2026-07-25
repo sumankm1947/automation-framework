@@ -15,6 +15,7 @@
         Cart <span class="cart-badge" data-testid="cart-badge">0</span>
       </a>
       <a href="/orders" data-testid="nav-orders">Orders</a>
+      <a href="/admin" data-testid="nav-admin" hidden>Admin</a>
       <a href="/login" data-testid="nav-login" hidden>Login</a>
       <a href="#" data-testid="nav-logout" hidden>Logout</a>
     </nav>
@@ -29,5 +30,6 @@
   </footer>
 
   <script src="/static/js/app.js" defer></script>
+  {% block scripts %}{% endblock %}
 </body>
 </html>

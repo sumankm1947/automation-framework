@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block content %}
+<h1 class="page-title" data-testid="admin-products-title">Admin · Products</h1>
+<p class="admin-links"><a href="/admin" data-testid="admin-orders-link">← Back to orders</a></p>
+
+<section class="card" data-testid="product-create-box">
+  <h2>Add product</h2>
+  <form class="form" data-testid="product-create-form" autocomplete="off">
+    <label for="p-sku">SKU</label>
+    <input id="p-sku" name="sku" data-testid="product-sku" required>
+    <label for="p-name">Name</label>
+    <input id="p-name" name="name" data-testid="product-name" required>
+    <label for="p-price">Price (cents)</label>
+    <input id="p-price" name="price_cents" type="number" min="0" data-testid="product-price" required>
+    <label for="p-stock">Stock</label>
+    <input id="p-stock" name="stock" type="number" min="0" value="0" data-testid="product-stock" required>
+    <label for="p-emoji">Emoji</label>
+    <input id="p-emoji" name="image_emoji" value="📦" data-testid="product-emoji">
+    <button type="submit" class="btn btn-primary" data-testid="product-create-submit">Create</button>
+    <p class="form-error" data-testid="product-create-error" role="alert" hidden></p>
+    <p class="form-ok" data-testid="product-create-ok" hidden></p>
+  </form>
+</section>
+
+<h2>Catalog</h2>
+<table class="table" data-testid="admin-products-table">
+  <thead>
+    <tr><th>SKU</th><th>Name</th><th>Price (cents)</th><th>Stock</th><th></th></tr>
+  </thead>
+  <tbody data-testid="admin-products-list"></tbody>
+</table>
+{% endblock %}
+{% block scripts %}<script src="/static/js/admin.js" defer></script>{% endblock %}

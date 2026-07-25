@@ -47,12 +47,14 @@ Organized by the 7 build milestones. Check items off as completed.
       (verified via smoke test: 28 checks — add/increment/OOS/exceed/remove/patch, 401/402/400/409,
       stock decrement, ownership 404, all page shells render)
 
-## Milestone 5 — Admin order lifecycle
-- [ ] `app/services.py` — order state machine (allowed transitions), totals, payment check
-- [ ] `GET /api/admin/orders`
-- [ ] `PATCH /api/admin/orders/{id}/status` (validate transition; write history)
-- [ ] Admin product mgmt: `POST /api/admin/products`, `PATCH /api/admin/products/{id}`
-- [ ] Admin pages (orders list + status control, product mgmt)
+## Milestone 5 — Admin order lifecycle  ✅ DONE (2026-07-26)
+- [x] `app/services.py` — order state machine (`ALLOWED_TRANSITIONS`, `advance_order_status`)
+- [x] `GET /api/admin/orders` (all orders + customer email), `GET /api/admin/orders/{id}`
+- [x] `PATCH /api/admin/orders/{id}/status` (validate transition → 409; writes history)
+- [x] Admin product mgmt: `POST /api/admin/products` (409 dup sku), `PATCH /api/admin/products/{id}` (partial)
+- [x] Admin pages (`/admin` orders + status control, `/admin/products`); admin nav link role-gated
+      (verified via smoke test: 26 checks — RBAC 401/403, full PLACED→DELIVERED chain,
+      invalid/terminal 409, 422 bad status, product create/dup/partial-update)
 
 ## Milestone 6 — Test-support + docs + testability
 - [ ] `POST /api/test/reset`, `POST /api/test/seed` (guarded: only when `app_env=test`)

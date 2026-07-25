@@ -45,7 +45,7 @@
   function show(el, on) { if (el) el.hidden = !on; }
 
   // --- Nav -------------------------------------------------------------
-  function updateNav() {
+  async function updateNav() {
     var loggedIn = !!getToken();
     show(byId("nav-login"), !loggedIn);
     show(byId("nav-logout"), loggedIn);
@@ -58,7 +58,25 @@
         window.location.href = "/login";
       });
     }
+    // Show the Admin link only for admins.
+    var adminLink = byId("nav-admin");
+    if (adminLink && loggedIn) {
+      try {
+        var res = await authFetch("/api/auth/me");
+        if (res.ok) {
+          var me = await res.json();
+          show(adminLink, me.role === "admin");
+        }
+      } catch (e) { /* ignore */ }
+    }
   }
+
+  // Exposed for admin.js
+  window.Shoplite = {
+    authFetch: authFetch, jsonFetch: jsonFetch, getToken: getToken,
+    money: money, requireAuthOrRedirect: requireAuthOrRedirect,
+    byId: byId, show: show,
+  };
 
   async function refreshCartBadge() {
     var badge = byId("cart-badge");
