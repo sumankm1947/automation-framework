@@ -5,6 +5,7 @@ identically in Docker Compose, CI, and on Render.
 """
 from functools import lru_cache
 
+from pydantic import field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -31,9 +32,23 @@ class Settings(BaseSettings):
 
     model_config = SettingsConfigDict(env_file=".env", extra="ignore")
 
+    @field_validator("database_url")
+    @classmethod
+    def _normalize_database_url(cls, value: str) -> str:
+        # Managed hosts (Render, Heroku) hand out a legacy `postgres://` URL,
+        # a scheme SQLAlchemy 2.0 no longer accepts. Coerce it to the modern
+        # `postgresql://` form (which uses the installed psycopg2 driver).
+        if value.startswith("postgres://"):
+            value = "postgresql://" + value[len("postgres://") :]
+        return value
+
     @property
     def is_test_env(self) -> bool:
         return self.app_env == "test"
+
+    @property
+    def is_production(self) -> bool:
+        return self.app_env == "production"
 
 
 @lru_cache

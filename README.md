@@ -42,6 +42,32 @@ defaults locally; Compose supplies sensible defaults without it.
 | `ADMIN_EMAIL` / `ADMIN_PASSWORD` | Default admin seeded on startup if absent. |
 | `FAIL_CARD_SUFFIX` | Card suffix that forces a mock-payment failure for negative tests. |
 
+## Deploy to Render
+
+The repo ships a [`render.yaml`](render.yaml) Blueprint that provisions the web
+service **and** a managed Postgres in one step.
+
+1. Push this repo to GitHub (already at `github.com/sumankm1947/automation-framework`).
+2. In the [Render dashboard](https://dashboard.render.com/), click **New +** →
+   **Blueprint**, and select this repository. Render reads `render.yaml`.
+3. When prompted, set **`ADMIN_PASSWORD`** (it uses `sync: false`, so it is never
+   stored in git). `JWT_SECRET` is generated automatically; `DATABASE_URL` is wired
+   from the managed database.
+4. Click **Apply**. Render builds the Docker image, starts Postgres, and deploys.
+   The app auto-creates its tables and seeds the admin + catalog on first boot.
+
+Notes:
+- `APP_ENV=production` on Render, so the destructive `/api/test/*` endpoints are
+  **not** mounted there.
+- The Dockerfile binds to Render's injected `$PORT` (falling back to `8000` locally).
+- Free-tier caveats: the web service sleeps after inactivity and cold-starts slowly;
+  the free Postgres instance expires after ~90 days. Fine for a portfolio demo.
+- **Load tests (Locust) must NOT be run against the free Render deploy** — throttling
+  makes the numbers meaningless. Run load tests locally only.
+
+CI/CD ("deploy only if green") is added later, once the test suite exists — a
+GitHub Actions workflow will run the tests and gate the Render deploy on success.
+
 ## Build progress
 
 Built in 7 milestones (see `docs/app-todo.md`).

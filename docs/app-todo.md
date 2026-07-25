@@ -74,6 +74,8 @@ Organized by the 7 build milestones. Check items off as completed.
       (verified via negative-path smoke test: 28 checks across 400/401/402/403/404/409/422)
 
 ## Deployment (after app is stable)
-- [ ] `render.yaml` / Render service config (app + Postgres)
-- [ ] Document deploy steps in README
-- [ ] Wire GitHub Actions to deploy to Render on green (CI itself is user's test todo)
+- [x] `render.yaml` / Render service config (app + Postgres) — Blueprint, free plan
+- [x] Production-readiness: Dockerfile honors `$PORT`; `config.py` normalizes `postgres://`→`postgresql://`
+- [x] Document deploy steps in README
+- [ ] User: create Render account, connect repo via Blueprint, set `ADMIN_PASSWORD`
+- [ ] Wire GitHub Actions to deploy to Render on green (deferred until tests exist; CI itself is user's test todo)

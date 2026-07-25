@@ -16,4 +16,6 @@ COPY static ./static
 
 EXPOSE 8000
 
-CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
+# Shell form so ${PORT} expands: hosts like Render inject $PORT at runtime.
+# Falls back to 8000 locally (matches docker-compose port mapping).
+CMD ["sh", "-c", "uvicorn app.main:app --host 0.0.0.0 --port ${PORT:-8000}"]

@@ -1,0 +1,39 @@
+# Render Blueprint — provisions the Shoplite web service + a managed Postgres.
+# Deploy: push to GitHub, then in the Render dashboard choose "New +" → "Blueprint"
+# and point it at this repo. Render reads this file and creates both resources.
+# Docs: https://render.com/docs/blueprint-spec
+
+databases:
+  - name: shoplite-db
+    plan: free
+    databaseName: shop
+    user: shop
+
+services:
+  - type: web
+    name: shoplite
+    runtime: docker
+    plan: free
+    # Dockerfile at repo root builds the app image.
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /health
+    envVars:
+      # Production keeps the destructive /api/test/* endpoints unmounted.
+      - key: APP_ENV
+        value: production
+      # Wired automatically from the managed database above.
+      - key: DATABASE_URL
+        fromDatabase:
+          name: shoplite-db
+          property: connectionString
+      # Random, never needs to be known by a human.
+      - key: JWT_SECRET
+        generateValue: true
+      - key: ADMIN_EMAIL
+        value: admin@shoplite.com
+      # sync:false => Render prompts you to set this in the dashboard at deploy
+      # time, so the admin password is never committed to git.
+      - key: ADMIN_PASSWORD
+        sync: false
+      - key: FAIL_CARD_SUFFIX
+        value: "0000"
