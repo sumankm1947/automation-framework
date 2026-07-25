@@ -110,6 +110,8 @@ a:hover { text-decoration: underline; }
 }
 .btn-primary { background: var(--brand); color: var(--brand-ink); }
 .btn-primary:hover { filter: brightness(0.95); }
+.btn-danger { background: transparent; color: var(--danger); border-color: var(--danger); }
+.btn-danger:hover { background: var(--danger); color: #fff; }
 .btn[disabled] { opacity: 0.5; cursor: not-allowed; }
 
 /* Forms */
@@ -139,3 +141,25 @@ a:hover { text-decoration: underline; }
 .sku { color: var(--muted); font-size: 0.85rem; }
 .product-description { margin: 1rem 0; }
 .empty { color: var(--muted); }
+
+/* Tables (cart, orders, order detail) */
+.table { width: 100%; border-collapse: collapse; background: var(--card);
+  border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
+.table th, .table td { padding: 0.6rem 0.75rem; text-align: left;
+  border-bottom: 1px solid var(--line); }
+.table thead th { background: #f0f2f5; font-size: 0.85rem; }
+.table tfoot td { font-weight: 700; }
+.table .right { text-align: right; }
+.qty-input { width: 4rem; padding: 0.3rem; border: 1px solid var(--line); border-radius: 6px; }
+
+/* Auth page */
+.auth-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; }
+.form-ok { color: var(--ok); font-size: 0.9rem; }
+.hint { color: var(--muted); font-size: 0.8rem; }
+.checkout-box { margin-top: 1.5rem; max-width: 420px; }
+
+/* Order detail */
+.order-head { display: flex; align-items: center; gap: 1rem; }
+.timeline { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 0.5rem; }
+.timeline li { display: flex; align-items: center; gap: 0.75rem; }
+.timeline time { color: var(--muted); font-size: 0.85rem; }

@@ -35,13 +35,17 @@ Organized by the 7 build milestones. Check items off as completed.
 - [x] Static mount, `price` Jinja filter (cents→$), cart-badge JS scaffold
       (verified via smoke test: list/single/404, page render, price format, static CSS)
 
-## Milestone 4 — Cart + checkout + orders
-- [ ] Cart / CartItem models
-- [ ] `GET /api/cart`, `POST /api/cart/items`, `PATCH /api/cart/items/{id}`, `DELETE /api/cart/items/{id}`
-- [ ] Order / OrderItem / OrderStatusHistory models
-- [ ] `POST /api/checkout` (mock payment; fail-card path; stock decrement; empty-cart guard)
-- [ ] `GET /api/orders`, `GET /api/orders/{id}` (with status timeline)
-- [ ] Cart page (with fetch-driven cart badge), checkout page, orders + order-detail pages
+## Milestone 4 — Cart + checkout + orders  ✅ DONE (2026-07-26)
+- [x] Cart / CartItem models (one cart per user; unique cart+product)
+- [x] `GET /api/cart`, `POST /api/cart/items`, `PATCH /api/cart/items/{id}`, `DELETE /api/cart/items/{id}`
+- [x] Order / OrderItem (price snapshot) / OrderStatusHistory models
+- [x] `POST /api/checkout` — mock payment (402 on fail-card), stock re-check (409),
+      empty-cart guard (400), stock decrement, cart cleared, PLACED history event
+- [x] `GET /api/orders`, `GET /api/orders/{id}` (items + status timeline; 404 for others' orders)
+- [x] Cart page (JS-rendered, qty edit/remove), checkout form, orders + order-detail pages
+- [x] `app/services.py` (cart math, payment check, checkout txn); fetch-driven cart badge live
+      (verified via smoke test: 28 checks — add/increment/OOS/exceed/remove/patch, 401/402/400/409,
+      stock decrement, ownership 404, all page shells render)
 
 ## Milestone 5 — Admin order lifecycle
 - [ ] `app/services.py` — order state machine (allowed transitions), totals, payment check

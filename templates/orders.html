@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block content %}
+<h1 class="page-title" data-testid="orders-title">Your Orders</h1>
+
+<p class="empty" data-testid="orders-empty" hidden>You have no orders yet.</p>
+
+<table class="table" data-testid="orders-table" hidden>
+  <thead>
+    <tr><th>Order</th><th>Placed</th><th>Status</th><th>Total</th></tr>
+  </thead>
+  <tbody data-testid="orders-list"></tbody>
+</table>
+{% endblock %}

@@ -31,3 +31,28 @@ def product_detail_page(
     return templates.TemplateResponse(
         request, "product_detail.html", {"product": product, "title": product.name}
     )
+
+
+# The pages below are client-rendered shells: the browser fetches data from the
+# JSON API using the stored JWT (see static/js/app.js). They render regardless
+# of auth; the client redirects to /login when no valid token is present.
+@router.get("/login", response_class=HTMLResponse)
+def login_page(request: Request) -> HTMLResponse:
+    return templates.TemplateResponse(request, "login.html", {"title": "Login"})
+
+
+@router.get("/cart", response_class=HTMLResponse)
+def cart_page(request: Request) -> HTMLResponse:
+    return templates.TemplateResponse(request, "cart.html", {"title": "Your Cart"})
+
+
+@router.get("/orders", response_class=HTMLResponse)
+def orders_page(request: Request) -> HTMLResponse:
+    return templates.TemplateResponse(request, "orders.html", {"title": "Your Orders"})
+
+
+@router.get("/orders/{order_id}", response_class=HTMLResponse)
+def order_detail_page(request: Request, order_id: int) -> HTMLResponse:
+    return templates.TemplateResponse(
+        request, "order_detail.html", {"title": f"Order #{order_id}", "order_id": order_id}
+    )

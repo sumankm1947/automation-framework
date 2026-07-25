@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block content %}
+<nav class="breadcrumb" data-testid="breadcrumb">
+  <a href="/orders" data-testid="breadcrumb-orders">Orders</a> / <span>Order #{{ order_id }}</span>
+</nav>
+
+<div data-testid="order-detail" data-order-id="{{ order_id }}">
+  <div class="order-head">
+    <h1 class="page-title" data-testid="order-heading">Order #{{ order_id }}</h1>
+    <span class="status-label" data-testid="order-status">—</span>
+  </div>
+
+  <table class="table" data-testid="order-items">
+    <thead>
+      <tr><th>Product</th><th>Price</th><th>Qty</th><th>Line total</th></tr>
+    </thead>
+    <tbody data-testid="order-items-body"></tbody>
+    <tfoot>
+      <tr>
+        <td colspan="3" class="right">Total</td>
+        <td class="price" data-testid="order-total">$0.00</td>
+      </tr>
+    </tfoot>
+  </table>
+
+  <h2>Status timeline</h2>
+  <ol class="timeline" data-testid="order-timeline"></ol>
+</div>
+{% endblock %}

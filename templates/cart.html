@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block content %}
+<h1 class="page-title" data-testid="cart-title">Your Cart</h1>
+
+<div data-testid="cart-container">
+  <p class="empty" data-testid="cart-empty" hidden>Your cart is empty.</p>
+
+  <table class="table" data-testid="cart-table" hidden>
+    <thead>
+      <tr><th>Product</th><th>Price</th><th>Qty</th><th>Line total</th><th></th></tr>
+    </thead>
+    <tbody data-testid="cart-items"></tbody>
+    <tfoot>
+      <tr>
+        <td colspan="3" class="right">Total</td>
+        <td class="price" data-testid="cart-total">$0.00</td>
+        <td></td>
+      </tr>
+    </tfoot>
+  </table>
+
+  <section class="card checkout-box" data-testid="checkout-box" hidden>
+    <h2>Checkout</h2>
+    <form class="form" data-testid="checkout-form" autocomplete="off">
+      <label for="card">Card number</label>
+      <input type="text" id="card" name="card_number" value="4111111111111111"
+             data-testid="checkout-card" required>
+      <small class="hint">Tip: a card ending in <code>0000</code> is declined (negative-test hook).</small>
+      <button type="submit" class="btn btn-primary" data-testid="checkout-submit">Place order</button>
+      <p class="form-error" data-testid="checkout-error" role="alert" hidden></p>
+    </form>
+  </section>
+</div>
+{% endblock %}

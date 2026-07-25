@@ -7,9 +7,9 @@ from __future__ import annotations
 
 from datetime import datetime
 
-from pydantic import BaseModel, ConfigDict, EmailStr, Field
+from pydantic import BaseModel, ConfigDict, EmailStr, Field, computed_field
 
-from app.models import Role
+from app.models import OrderStatus, Role
 
 
 class UserRegister(BaseModel):
@@ -54,3 +54,76 @@ class ProductPublic(BaseModel):
     @property
     def in_stock(self) -> bool:  # convenience for templates
         return self.stock > 0
+
+
+# --- Cart ---
+class CartItemCreate(BaseModel):
+    product_id: int
+    quantity: int = Field(default=1, ge=1, le=100)
+
+
+class CartItemUpdate(BaseModel):
+    quantity: int = Field(ge=1, le=100)
+
+
+class CartItemPublic(BaseModel):
+    id: int
+    product_id: int
+    name: str
+    image_emoji: str
+    unit_price_cents: int
+    quantity: int
+    line_total_cents: int
+
+
+class CartPublic(BaseModel):
+    items: list[CartItemPublic]
+    item_count: int
+    total_cents: int
+
+
+# --- Checkout + Orders ---
+class CheckoutRequest(BaseModel):
+    # Mock payment: any card number ending in FAIL_CARD_SUFFIX is declined.
+    card_number: str = Field(min_length=4, max_length=32)
+
+
+class OrderItemPublic(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
+    product_id: int | None
+    product_name: str
+    unit_price_cents: int
+    quantity: int
+
+    @computed_field  # type: ignore[prop-decorator]
+    @property
+    def line_total_cents(self) -> int:
+        return self.unit_price_cents * self.quantity
+
+
+class OrderStatusEventPublic(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
+    status: OrderStatus
+    created_at: datetime
+
+
+class OrderSummary(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
+    id: int
+    status: OrderStatus
+    total_cents: int
+    created_at: datetime
+
+
+class OrderPublic(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
+    id: int
+    status: OrderStatus
+    total_cents: int
+    created_at: datetime
+    items: list[OrderItemPublic]
+    history: list[OrderStatusEventPublic]

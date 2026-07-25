@@ -55,3 +55,8 @@ Built in 7 milestones (see `docs/app-todo.md`).
   `GET /api/products/{id}`, plus server-rendered catalog (`/`) and product-detail
   (`/products/{id}`) pages with stable `data-testid`s. Prices are stored as integer
   cents. Eight products (one out-of-stock) are seeded on startup.
+- **Milestone 4 complete:** cart, checkout, and orders. Cart API
+  (`GET /api/cart`, `POST/PATCH/DELETE /api/cart/items[...]`), `POST /api/checkout`
+  (mock payment — a card ending in `FAIL_CARD_SUFFIX` is declined with 402), and
+  `GET /api/orders[/{id}]` with a status timeline. Cart/checkout/orders pages fetch
+  the API client-side using the JWT saved at login; the cart badge is fetch-driven.

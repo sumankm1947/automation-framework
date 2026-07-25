@@ -10,7 +10,7 @@ from sqlalchemy import text
 
 from app.config import get_settings
 from app.database import Base, engine
-from app.routers import auth, pages, products
+from app.routers import auth, cart, orders, pages, products
 
 settings = get_settings()
 
@@ -53,6 +53,8 @@ def create_app() -> FastAPI:
 
     app.include_router(auth.router)
     app.include_router(products.router)
+    app.include_router(cart.router)
+    app.include_router(orders.router)
     app.include_router(pages.router)
 
     return app
