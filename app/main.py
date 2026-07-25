@@ -4,7 +4,10 @@ Milestone 1 wires up the app, health/readiness probes, and creates tables
 on startup. Later milestones register auth, product, cart, order, and admin
 routers here.
 """
-from fastapi import FastAPI
+import logging
+
+from fastapi import FastAPI, Request
+from fastapi.responses import JSONResponse
 from fastapi.staticfiles import StaticFiles
 from sqlalchemy import text
 
@@ -13,6 +16,7 @@ from app.database import Base, engine
 from app.routers import admin, auth, cart, orders, pages, products
 
 settings = get_settings()
+logger = logging.getLogger("shoplite")
 
 
 def create_app() -> FastAPI:
@@ -23,6 +27,12 @@ def create_app() -> FastAPI:
         docs_url="/docs",
         openapi_url="/openapi.json",
     )
+
+    @app.exception_handler(Exception)
+    async def unhandled_exception_handler(request: Request, exc: Exception) -> JSONResponse:
+        # Never leak stack traces to clients; keep the error shape consistent.
+        logger.exception("Unhandled error on %s %s", request.method, request.url.path)
+        return JSONResponse(status_code=500, content={"detail": "Internal server error"})
 
     @app.on_event("startup")
     def on_startup() -> None:

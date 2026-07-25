@@ -64,12 +64,14 @@ Organized by the 7 build milestones. Check items off as completed.
       (verified via smoke test: seed/reset counts, idempotency, wipe, OpenAPI paths;
       separate check confirms test endpoints 404 + absent from schema outside test env)
 
-## Milestone 7 — Negative-path polish
-- [ ] Out-of-stock handling on checkout
-- [ ] Bad/failed payment path returns clean error
-- [ ] Unauthorized/forbidden responses correct (401 vs 403) across routes
-- [ ] Input validation errors return 422 with useful detail
-- [ ] Consistent error response shape
+## Milestone 7 — Negative-path polish  ✅ DONE (2026-07-26)
+- [x] Out-of-stock handling: 409 on add/exceed and re-checked at checkout (409)
+- [x] Bad/failed payment path returns clean 402 with `detail`
+- [x] 401 vs 403 correct across routes (auth→401, non-admin→403); malformed/bad-sub token→401 (no 500)
+- [x] Input validation returns 422 with a `detail` list (short pw, bad email, qty bounds, bad enum, missing fields)
+- [x] Consistent error shape: every handled error returns JSON `{"detail": ...}`;
+      added a catch-all 500 handler that logs and never leaks stack traces
+      (verified via negative-path smoke test: 28 checks across 400/401/402/403/404/409/422)
 
 ## Deployment (after app is stable)
 - [ ] `render.yaml` / Render service config (app + Postgres)

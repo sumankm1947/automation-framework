@@ -30,7 +30,12 @@ def get_current_user(
     if claims is None or "sub" not in claims:
         raise unauthorized
 
-    user = db.get(User, int(claims["sub"]))
+    try:
+        user_id = int(claims["sub"])
+    except (TypeError, ValueError):
+        raise unauthorized
+
+    user = db.get(User, user_id)
     if user is None:
         raise unauthorized
     return user

@@ -69,6 +69,10 @@ Built in 7 milestones (see `docs/app-todo.md`).
   and `POST /api/test/seed` (mounted **only** when `APP_ENV=test`) give automation a
   clean, known state. Stable `data-testid`s across every template. The `/openapi.json`
   contract is complete (all API paths; HTML pages excluded).
+- **Milestone 7 complete:** negative-path polish. Consistent JSON error shape
+  (`{"detail": ...}`), correct `401` vs `403`, `402` on declined payment, `409` for
+  out-of-stock / illegal state transitions / duplicates, `422` for validation, and a
+  catch-all `500` handler that never leaks stack traces. **The app is feature-complete.**
 
 ## Seeded accounts & test hooks
 
