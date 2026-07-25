@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block content %}
+<h1 class="page-title" data-testid="catalog-title">Catalog</h1>
+
+<div class="product-grid" data-testid="product-grid">
+  {% for product in products %}
+  <article class="card product-card" data-testid="product-card" data-sku="{{ product.sku }}">
+    <a class="product-link" href="/products/{{ product.id }}" data-testid="product-link">
+      <div class="product-thumb" aria-hidden="true">{{ product.image_emoji }}</div>
+      <h2 class="product-name" data-testid="product-name">{{ product.name }}</h2>
+    </a>
+    <div class="product-meta">
+      <span class="price" data-testid="product-price">{{ product.price_cents | price }}</span>
+      {% if product.stock > 0 %}
+        <span class="stock in-stock" data-testid="product-stock">In stock</span>
+      {% else %}
+        <span class="stock out-of-stock" data-testid="product-stock">Out of stock</span>
+      {% endif %}
+    </div>
+    <button
+      class="btn btn-primary add-to-cart"
+      data-testid="add-to-cart"
+      data-product-id="{{ product.id }}"
+      {% if product.stock == 0 %}disabled{% endif %}>
+      Add to cart
+    </button>
+  </article>
+  {% else %}
+  <p class="empty" data-testid="catalog-empty">No products available.</p>
+  {% endfor %}
+</div>
+{% endblock %}

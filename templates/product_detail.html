@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block content %}
+<nav class="breadcrumb" data-testid="breadcrumb">
+  <a href="/" data-testid="breadcrumb-catalog">Catalog</a> / <span>{{ product.name }}</span>
+</nav>
+
+<article class="product-detail" data-testid="product-detail" data-sku="{{ product.sku }}">
+  <div class="product-detail-thumb" aria-hidden="true">{{ product.image_emoji }}</div>
+  <div class="product-detail-body">
+    <h1 class="page-title" data-testid="detail-name">{{ product.name }}</h1>
+    <p class="sku" data-testid="detail-sku">SKU: {{ product.sku }}</p>
+    <p class="price price-lg" data-testid="detail-price">{{ product.price_cents | price }}</p>
+
+    {% if product.stock > 0 %}
+      <p class="stock in-stock" data-testid="detail-stock">In stock ({{ product.stock }} available)</p>
+    {% else %}
+      <p class="stock out-of-stock" data-testid="detail-stock">Out of stock</p>
+    {% endif %}
+
+    <p class="product-description" data-testid="detail-description">{{ product.description }}</p>
+
+    <button
+      class="btn btn-primary add-to-cart"
+      data-testid="add-to-cart"
+      data-product-id="{{ product.id }}"
+      {% if product.stock == 0 %}disabled{% endif %}>
+      Add to cart
+    </button>
+  </div>
+</article>
+{% endblock %}

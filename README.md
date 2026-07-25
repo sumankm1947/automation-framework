@@ -51,3 +51,7 @@ Built in 7 milestones (see `docs/app-todo.md`).
   `POST /api/auth/register`, `POST /api/auth/login`, `GET /api/auth/me`. A default
   admin (`ADMIN_EMAIL` / `ADMIN_PASSWORD`, default `admin@shoplite.com` / `admin12345`)
   is seeded on startup. Send the token as `Authorization: Bearer <token>`.
+- **Milestone 3 complete:** product catalog — `GET /api/products`,
+  `GET /api/products/{id}`, plus server-rendered catalog (`/`) and product-detail
+  (`/products/{id}`) pages with stable `data-testid`s. Prices are stored as integer
+  cents. Eight products (one out-of-stock) are seeded on startup.

@@ -36,3 +36,21 @@ class UserPublic(BaseModel):
 class TokenResponse(BaseModel):
     access_token: str
     token_type: str = "bearer"
+
+
+class ProductPublic(BaseModel):
+    """Product as exposed by the catalog API."""
+
+    model_config = ConfigDict(from_attributes=True)
+
+    id: int
+    sku: str
+    name: str
+    description: str
+    price_cents: int
+    stock: int
+    image_emoji: str
+
+    @property
+    def in_stock(self) -> bool:  # convenience for templates
+        return self.stock > 0

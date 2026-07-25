@@ -5,11 +5,12 @@ on startup. Later milestones register auth, product, cart, order, and admin
 routers here.
 """
 from fastapi import FastAPI
+from fastapi.staticfiles import StaticFiles
 from sqlalchemy import text
 
 from app.config import get_settings
 from app.database import Base, engine
-from app.routers import auth
+from app.routers import auth, pages, products
 
 settings = get_settings()
 
@@ -48,7 +49,11 @@ def create_app() -> FastAPI:
             return {"status": "not-ready", "database": "unreachable"}
         return {"status": "ready", "database": "ok"}
 
+    app.mount("/static", StaticFiles(directory="static"), name="static")
+
     app.include_router(auth.router)
+    app.include_router(products.router)
+    app.include_router(pages.router)
 
     return app
 

@@ -26,11 +26,14 @@ Organized by the 7 build milestones. Check items off as completed.
 - [x] Seed a default admin account (`app/seed.py`, idempotent, on startup)
       (verified via SQLite smoke test: register/dup-409/short-422/login/401/me/admin-role)
 
-## Milestone 3 — Products + catalog pages
-- [ ] Product model
-- [ ] `GET /api/products`, `GET /api/products/{id}`
-- [ ] Catalog page (product grid) + product detail page (Jinja2)
-- [ ] Basic CSS file (layout, cards, forms, buttons, nav)
+## Milestone 3 — Products + catalog pages  ✅ DONE (2026-07-26)
+- [x] Product model (sku, name, description, `price_cents` int, stock, image_emoji)
+- [x] `GET /api/products`, `GET /api/products/{id}` (404 on missing)
+- [x] Catalog page (product grid) + product detail page (Jinja2, `data-testid`s)
+- [x] Basic CSS file (layout, cards, forms, buttons, nav, color-coded status labels)
+- [x] Seed 8 deterministic products (incl. one out-of-stock SKU-PEN for negatives)
+- [x] Static mount, `price` Jinja filter (cents→$), cart-badge JS scaffold
+      (verified via smoke test: list/single/404, page render, price format, static CSS)
 
 ## Milestone 4 — Cart + checkout + orders
 - [ ] Cart / CartItem models

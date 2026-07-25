@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}{{ title }}{% endblock %} · Shoplite</title>
+  <link rel="stylesheet" href="/static/css/styles.css">
+</head>
+<body>
+  <header class="nav" data-testid="nav">
+    <a class="nav-brand" href="/" data-testid="nav-brand">🛍️ Shoplite</a>
+    <nav class="nav-links">
+      <a href="/" data-testid="nav-catalog">Catalog</a>
+      <a href="/cart" data-testid="nav-cart">
+        Cart <span class="cart-badge" data-testid="cart-badge">0</span>
+      </a>
+      <a href="/orders" data-testid="nav-orders">Orders</a>
+      <a href="/login" data-testid="nav-login">Login</a>
+    </nav>
+  </header>
+
+  <main class="container" data-testid="main">
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer class="footer">
+    <span>Shoplite — a test-automation practice target.</span>
+  </footer>
+
+  <script src="/static/js/app.js" defer></script>
+</body>
+</html>
