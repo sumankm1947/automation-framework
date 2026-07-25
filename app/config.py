@@ -21,6 +21,10 @@ class Settings(BaseSettings):
     jwt_algorithm: str = "HS256"
     jwt_expire_minutes: int = 60
 
+    # Default admin, seeded on startup if no user with this email exists.
+    admin_email: str = "admin@shoplite.com"
+    admin_password: str = "admin12345"
+
     # Mock payment: any card number ending with this suffix fails checkout,
     # giving the test suite a deterministic negative path.
     fail_card_suffix: str = "0000"

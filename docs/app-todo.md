@@ -17,12 +17,14 @@ Organized by the 7 build milestones. Check items off as completed.
 - [x] Verify `docker compose up` boots app + DB and `/health` returns 200
       (verified: /health→200 ok, /ready→200 db ok, /openapi.json title "Shoplite API")
 
-## Milestone 2 — Auth + users/roles
-- [ ] `app/models.py` — User (email, password_hash, role)
-- [ ] `app/security.py` — bcrypt hashing, JWT create/decode
-- [ ] `app/deps.py` — `get_current_user`, `require_admin`
-- [ ] `POST /api/auth/register`, `POST /api/auth/login`, `GET /api/auth/me`
-- [ ] Seed a default admin account
+## Milestone 2 — Auth + users/roles  ✅ DONE (2026-07-26)
+- [x] `app/models.py` — User (email, password_hash, role) + `Role` enum
+- [x] `app/security.py` — bcrypt hashing, JWT create/decode
+- [x] `app/deps.py` — `get_current_user` (401), `require_admin` (403)
+- [x] `app/schemas.py` — register/login/user/token Pydantic contracts
+- [x] `POST /api/auth/register`, `POST /api/auth/login`, `GET /api/auth/me`
+- [x] Seed a default admin account (`app/seed.py`, idempotent, on startup)
+      (verified via SQLite smoke test: register/dup-409/short-422/login/401/me/admin-role)
 
 ## Milestone 3 — Products + catalog pages
 - [ ] Product model

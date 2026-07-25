@@ -39,9 +39,15 @@ defaults locally; Compose supplies sensible defaults without it.
 | `APP_ENV` | `local` \| `test` \| `production`. Guarded `/api/test/*` endpoints enable only under `test`. |
 | `DATABASE_URL` | SQLAlchemy Postgres URL. |
 | `JWT_SECRET` / `JWT_ALGORITHM` / `JWT_EXPIRE_MINUTES` | Auth (from Milestone 2). |
+| `ADMIN_EMAIL` / `ADMIN_PASSWORD` | Default admin seeded on startup if absent. |
 | `FAIL_CARD_SUFFIX` | Card suffix that forces a mock-payment failure for negative tests. |
 
 ## Build progress
 
-Built in 7 milestones (see `docs/app-todo.md`). **Milestone 1 complete:**
-skeleton, Docker + Postgres, and `/health` + `/ready` probes.
+Built in 7 milestones (see `docs/app-todo.md`).
+
+- **Milestone 1 complete:** skeleton, Docker + Postgres, `/health` + `/ready` probes.
+- **Milestone 2 complete:** JWT auth with `user`/`admin` roles —
+  `POST /api/auth/register`, `POST /api/auth/login`, `GET /api/auth/me`. A default
+  admin (`ADMIN_EMAIL` / `ADMIN_PASSWORD`, default `admin@shoplite.com` / `admin12345`)
+  is seeded on startup. Send the token as `Authorization: Bearer <token>`.

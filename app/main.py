@@ -9,6 +9,7 @@ from sqlalchemy import text
 
 from app.config import get_settings
 from app.database import Base, engine
+from app.routers import auth
 
 settings = get_settings()
 
@@ -27,6 +28,10 @@ def create_app() -> FastAPI:
         # For the portfolio app we create tables directly on startup; Alembic
         # migrations are layered in a later milestone.
         Base.metadata.create_all(bind=engine)
+        # Ensure a default admin exists (idempotent).
+        from app.seed import run_seed
+
+        run_seed()
 
     @app.get("/health", tags=["system"])
     def health() -> dict[str, str]:
@@ -42,6 +47,8 @@ def create_app() -> FastAPI:
         except Exception:
             return {"status": "not-ready", "database": "unreachable"}
         return {"status": "ready", "database": "ok"}
+
+    app.include_router(auth.router)
 
     return app
 
