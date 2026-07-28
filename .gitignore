@@ -36,3 +36,7 @@ pgdata/
 # Local smoke-verification artifacts (not part of the project)
 .smokevenv/
 *.db
+
+
+# Testing artifacts
+.testvenv
